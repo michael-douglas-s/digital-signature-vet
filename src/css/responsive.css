@@ -1,0 +1,108 @@
+/* Responsivo básico para telas menores */
+@media (max-width: 768px) {
+  body {
+    margin: 10px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .upload-container {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  #canvas-area {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 210 / 297; /* A4 ratio para manter proporção */
+  }
+
+  #assinatura {
+    width: 100px;
+    max-width: 30vw;
+  }
+
+  button {
+    width: 40%;
+    padding: 5px;
+    font-size: 1rem;
+    margin-top: 1rem;
+    color: red;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+  }
+  .header-assinatura {
+    margin-bottom: 2rem;
+    gap: 0.8rem;
+  }
+}
+
+/* Extra pequeno (celulares) */
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  #assinatura {
+    width: 80px;
+  }
+
+  .upload-container {
+    gap: 1rem;
+  }
+
+  .nome-arquivo {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .header-assinatura {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .upload-container {
+    flex-direction: column;
+  }
+}
+
+/* responsive header */
+@media (max-width: 768px) {
+  /* responsive header */
+
+  .logo{
+    margin-right: 1.5rem;
+  }
+  .logo img {
+    width: 3rem;
+  }
+
+  h1 {
+    font-size: 1rem;
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
+
+  .container-h1 {
+    margin: 0;
+  }
+
+  .text-receita,
+  .text-assinatura {
+    font-size: 0.9rem;
+  }
+}
+
+/* ajuste para telas muito pequenas */
+@media (max-width: 440px) {
+  .header-assinatura {
+    flex-direction: column;
+  }
+}

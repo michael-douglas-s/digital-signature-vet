@@ -1,0 +1,193 @@
+body {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--background-image);
+}
+
+.upload-container {
+  margin-bottom: 20px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 80%;
+}
+
+#canvas-area {
+  position: relative;
+  width: 90vw;
+  max-width: 800px;
+  height: 1120px;
+  border: 1px solid #ccc;
+  background-color: white;
+  overflow: hidden;
+}
+
+#canvas-area canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#assinatura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: auto;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  cursor: move;
+  user-select: none;
+  display: none;
+  resize: both;
+  overflow: auto;
+}
+
+.upload-icon {
+  display: inline-block;
+  font-size: 32px;
+  color: #000000;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: transform 0.2s ease;
+}
+
+.upload-icon:hover {
+  transform: scale(1.1);
+  color: #0056b3;
+}
+
+.selecionar-arquivo,
+.selecionar-assinatura {
+  display: none;
+}
+
+.container-receita,
+.container-assinatura {
+  display: flex;
+  flex-direction: column;
+}
+
+.nome-arquivo {
+  margin-top: 0.5rem;
+  border: solid 1px black;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.btn-pdf {
+  color: red;
+  background-color: none;
+  padding: 0.2rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s ease-out;
+  margin: 2rem 0;
+}
+
+.btn-pdf:hover {
+  transform: scale(1.2);
+}
+
+/* HEADER */
+
+.header-assinatura {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-shadow: 10px 10px 2rem rgb(15, 241, 230);
+}
+
+h1 {
+  font-size: 1.6rem;
+  text-shadow: 10px 10px 2rem rgb(15, 241, 230);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+img {
+  width: 7rem;
+}
+
+/*  Animação do title */
+
+.container-h1 {
+  margin-right: 3rem;
+  position: relative;
+  background: var(--background-image);
+  padding: 0 2rem;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.container-h1::before {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 400px;
+  background: linear-gradient(180deg, #a10bf8, #05ebe0);
+  animation: animate 7s linear infinite;
+}
+
+@keyframes animate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.container-h1::after {
+  content: "";
+  position: absolute;
+  background: var(--background-image);
+  inset: 5px;
+  border-radius: inherit;
+}
+
+.container-h1 h1 {
+  z-index: 1;
+}
+
+/* Animacão de cores dos icons */
+
+.upload-icon {
+  display: inline-block;
+  font-size: 32px;
+  color: #000000;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: transform 0.2s ease;
+  animation: pulseColor 2s infinite;
+}
+
+.upload-icon:hover {
+  transform: scale(1.1);
+  color: #0056b3;
+}
+
+@keyframes pulseColor {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
