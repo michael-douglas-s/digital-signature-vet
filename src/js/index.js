@@ -203,3 +203,51 @@ assinaturaImg.addEventListener("touchstart", function (e) {
     document.getElementById("nome-assinatura").textContent = fileName;
   });
   
+
+
+  // modal
+
+  let cropper;
+const imgCropper = document.getElementById("img-cropper");
+const modalCropper = document.getElementById("modal-cropper");
+const btnCortar = document.getElementById("btn-cortar");
+
+document.getElementById("upload-assinatura").addEventListener("change", function (e) {
+  const file = e.target.files[0];
+  if (!file || !file.type.startsWith("image/")) {
+    alert("Selecione uma imagem válida.");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    imgCropper.src = event.target.result;
+    modalCropper.style.display = "flex";
+
+    if (cropper) cropper.destroy();
+
+    cropper = new Cropper(imgCropper, {
+      aspectRatio: NaN,
+      viewMode: 1,
+      autoCropArea: 1,
+    });
+  };
+
+  reader.readAsDataURL(file);
+});
+
+btnCortar.addEventListener("click", function () {
+  const canvas = cropper.getCroppedCanvas();
+  if (canvas) {
+    assinaturaImg.src = canvas.toDataURL("image/png");
+    assinaturaImg.style.display = "block";
+  }
+
+  modalCropper.style.display = "none";
+  cropper.destroy();
+});
+
+function fecharCrop() {
+  modalCropper.style.display = "none";
+  if (cropper) cropper.destroy();
+}
