@@ -205,7 +205,7 @@ assinaturaImg.addEventListener("touchstart", function (e) {
   
 
 
-  // modal
+  // modal croppers
 
   let cropper;
 const imgCropper = document.getElementById("img-cropper");

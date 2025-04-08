@@ -16,10 +16,9 @@
       referrerpolicy="no-referrer"
     />
     <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"
-/>
-
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"
+    />
   </head>
   <body>
     <header class="header-assinatura">
@@ -74,16 +73,15 @@
 
     <button class="btn-pdf" onclick="gerarPDF()">Baixar PDF</button>
     <!-- Modal do Cropper -->
-<div id="modal-cropper" class="modal" style="display: none;">
-  <div class="modal-content">
-    <img id="img-cropper" src="" />
-    <div style="text-align: center; margin-top: 10px;">
-      <button id="btn-cortar">Cortar</button>
-      <button onclick="fecharCrop()">Cancelar</button>
+    <div id="modal-cropper" class="modal" style="display: none">
+      <div class="modal-content">
+        <img id="img-cropper" src="" />
+        <div style="text-align: center; margin-top: 10px">
+          <button id="btn-cortar">Aplicar</button>
+          <button onclick="fecharCrop()">Cancelar</button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
 
     <!-- Bibliotecas -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.13.216/pdf.min.js"></script>
@@ -97,6 +95,5 @@
       referrerpolicy="no-referrer"
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-
   </body>
 </html>
