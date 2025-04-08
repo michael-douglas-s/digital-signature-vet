@@ -45,10 +45,18 @@ document.getElementById("upload-receita").addEventListener("change", function (e
       const img = document.createElement("img");
       img.src = event.target.result;
       img.style.width = "100%";
+      img.style.display = "block";
+      img.style.position = "relative"; // necessário para evitar problemas de camadas
+  
+      // limpa canvas-area e reaplica imagem + assinatura
+      const assinatura = assinaturaImg;
+      canvasArea.innerHTML = "";
       canvasArea.appendChild(img);
+      canvasArea.appendChild(assinatura);
     };
     reader.readAsDataURL(file);
   }
+  
 });
 
 // Upload da Assinatura
