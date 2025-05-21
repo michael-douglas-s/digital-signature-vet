@@ -83,18 +83,19 @@ body {
 }
 
 .btn-pdf {
-  color: red;
+  color: rgb(233, 233, 233);
   background-color: none;
-  padding: 0.2rem 1rem;
+  padding: .5rem;
   border-radius: 0.5rem;
   cursor: pointer;
   border: none;
   transition: 0.2s ease-out;
-  margin: 2rem 0;
+  margin: .5rem 0;
+  width:170px;
 }
 
 .btn-pdf:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 /* HEADER */
@@ -235,4 +236,12 @@ button {
 
 button:hover {
   background-color: rgb(34, 136, 39);
+}
+.btn-pages {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: .5rem 0rem 0 7rem;
+  gap: 1rem;
 }
