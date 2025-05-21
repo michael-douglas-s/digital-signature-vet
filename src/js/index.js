@@ -127,19 +127,34 @@ document.addEventListener("touchend", function () {
 });
 
 // --------- Gerar PDF Final ---------
-function gerarPDF() {
-  html2canvas(canvasArea).then(function (canvas) {
-    const imgData = canvas.toDataURL("image/png");
+
+  async function gerarPDFCompleto() {
+    if (!pdfDoc) {
+      alert("Nenhum PDF carregado.");
+      return;
+    }
+
     const pdf = new jspdf.jsPDF("p", "mm", "a4");
+    const assinaturaPos = assinaturaImg.getBoundingClientRect();
+    const canvasRect = canvasArea.getBoundingClientRect();
 
-    const imgProps = pdf.getImageProperties(imgData);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+      await renderPage(pageNum); // Mostra página
+      await new Promise(resolve => setTimeout(resolve, 300)); // Espera DOM atualizar
 
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-    pdf.save("receita-assinada.pdf");
-  });
-}
+      const canvas = await html2canvas(canvasArea);
+      const imgData = canvas.toDataURL("image/png");
+
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      if (pageNum > 1) pdf.addPage();
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    }
+
+    pdf.save("receita-assinada-completa.pdf");
+  }
 
 // --------- Modal e Cropper para Assinatura ---------
 document.getElementById("upload-assinatura").addEventListener("change", function (e) {
@@ -249,3 +264,6 @@ uploadReceita.addEventListener('change', async function () {
     fileReader.readAsArrayBuffer(file);
   }
 });
+
+
+

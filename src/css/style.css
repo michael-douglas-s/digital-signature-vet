@@ -238,10 +238,6 @@ button:hover {
   background-color: rgb(34, 136, 39);
 }
 .btn-pages {
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: .5rem 0rem 0 7rem;
-  gap: 1rem;
+  margin-bottom: 0.5rem;
+ 
 }
