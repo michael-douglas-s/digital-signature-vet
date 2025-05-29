@@ -85,13 +85,13 @@ body {
 .btn-pdf {
   color: rgb(233, 233, 233);
   background-color: none;
-  padding: .5rem;
+  padding: 0.5rem;
   border-radius: 0.5rem;
   cursor: pointer;
   border: none;
   transition: 0.2s ease-out;
-  margin: .5rem 0;
-  width:170px;
+  margin: 0.5rem 0;
+  width: 170px;
 }
 
 .btn-pdf:hover {
@@ -239,5 +239,46 @@ button:hover {
 }
 .btn-pages {
   margin-bottom: 0.5rem;
- 
+}
+
+/* loading modal */
+
+#loading-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-content {
+  background-color: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 10px black;
+}
+
+.spinner {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #333;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 10px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

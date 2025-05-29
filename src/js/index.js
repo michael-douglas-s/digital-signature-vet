@@ -1,8 +1,8 @@
 // Referências dos elementos
-const uploadReceita = document.getElementById('upload-receita');
-const uploadAssinatura = document.getElementById('upload-assinatura');
-const canvasArea = document.getElementById('canvas-area');
-const assinaturaImg = document.getElementById('assinatura');
+const uploadReceita = document.getElementById("upload-receita");
+const uploadAssinatura = document.getElementById("upload-assinatura");
+const canvasArea = document.getElementById("canvas-area");
+const assinaturaImg = document.getElementById("assinatura");
 const imgCropper = document.getElementById("img-cropper");
 const modalCropper = document.getElementById("modal-cropper");
 const btnCortar = document.getElementById("btn-cortar");
@@ -12,12 +12,13 @@ let offsetX, offsetY;
 let cropper;
 
 // --------- Carregar Receita (PDF ou Imagem) ---------
-uploadReceita.addEventListener('change', async function () {
+uploadReceita.addEventListener("change", async function () {
   const file = this.files[0];
   if (!file) return;
 
   // Mostrar nome do arquivo selecionado
-  document.getElementById("nome-receita").textContent = file.name || "Nenhum arquivo escolhido";
+  document.getElementById("nome-receita").textContent =
+    file.name || "Nenhum arquivo escolhido";
 
   if (file.type === "application/pdf") {
     const fileReader = new FileReader();
@@ -28,8 +29,8 @@ uploadReceita.addEventListener('change', async function () {
       const page = await pdf.getPage(1);
 
       const viewport = page.getViewport({ scale: 1.5 });
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
       canvas.width = viewport.width;
       canvas.height = viewport.height;
 
@@ -37,13 +38,12 @@ uploadReceita.addEventListener('change', async function () {
       await page.render(renderContext).promise;
 
       // Limpar canvas-area mas manter a assinatura
-      canvasArea.innerHTML = '';
+      canvasArea.innerHTML = "";
       canvasArea.appendChild(canvas);
       canvasArea.appendChild(assinaturaImg);
     };
 
     fileReader.readAsArrayBuffer(file);
-
   } else if (file.type.startsWith("image/")) {
     const reader = new FileReader();
 
@@ -65,18 +65,19 @@ uploadReceita.addEventListener('change', async function () {
 });
 
 // --------- Upload da Assinatura ---------
-uploadAssinatura.addEventListener('change', function () {
+uploadAssinatura.addEventListener("change", function () {
   const file = this.files[0];
   if (!file) return;
 
   // Mostrar nome do arquivo selecionado
-  document.getElementById("nome-assinatura").textContent = file.name || "Nenhum arquivo escolhido";
+  document.getElementById("nome-assinatura").textContent =
+    file.name || "Nenhum arquivo escolhido";
 
   const reader = new FileReader();
 
   reader.onload = function (e) {
     assinaturaImg.src = e.target.result;
-    assinaturaImg.style.display = 'block';
+    assinaturaImg.style.display = "block";
   };
 
   reader.readAsDataURL(file);
@@ -128,58 +129,60 @@ document.addEventListener("touchend", function () {
 
 // --------- Gerar PDF Final ---------
 
-  async function gerarPDFCompleto() {
-    if (!pdfDoc) {
-      alert("Nenhum PDF carregado.");
-      return;
-    }
-
-    const pdf = new jspdf.jsPDF("p", "mm", "a4");
-    const assinaturaPos = assinaturaImg.getBoundingClientRect();
-    const canvasRect = canvasArea.getBoundingClientRect();
-
-    for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-      await renderPage(pageNum); // Mostra página
-      await new Promise(resolve => setTimeout(resolve, 300)); // Espera DOM atualizar
-
-      const canvas = await html2canvas(canvasArea);
-      const imgData = canvas.toDataURL("image/png");
-
-      const imgProps = pdf.getImageProperties(imgData);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-      if (pageNum > 1) pdf.addPage();
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-    }
-
-    pdf.save("receita-assinada-completa.pdf");
-  }
-
-// --------- Modal e Cropper para Assinatura ---------
-document.getElementById("upload-assinatura").addEventListener("change", function (e) {
-  const file = e.target.files[0];
-  if (!file || !file.type.startsWith("image/")) {
-    alert("Selecione uma imagem válida.");
+async function gerarPDFCompleto() {
+  if (!pdfDoc) {
+    alert("Nenhum PDF carregado.");
     return;
   }
 
-  const reader = new FileReader();
-  reader.onload = function (event) {
-    imgCropper.src = event.target.result;
-    modalCropper.style.display = "flex";
+  const pdf = new jspdf.jsPDF("p", "mm", "a4");
+  const assinaturaPos = assinaturaImg.getBoundingClientRect();
+  const canvasRect = canvasArea.getBoundingClientRect();
 
-    if (cropper) cropper.destroy();
+  for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+    await renderPage(pageNum); // Mostra página
+    await new Promise((resolve) => setTimeout(resolve, 300)); // Espera DOM atualizar
 
-    cropper = new Cropper(imgCropper, {
-      aspectRatio: NaN,
-      viewMode: 1,
-      autoCropArea: 1,
-    });
-  };
+    const canvas = await html2canvas(canvasArea);
+    const imgData = canvas.toDataURL("image/png");
 
-  reader.readAsDataURL(file);
-});
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    if (pageNum > 1) pdf.addPage();
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+  }
+
+  pdf.save("receita-assinada-completa.pdf");
+}
+
+// --------- Modal e Cropper para Assinatura ---------
+document
+  .getElementById("upload-assinatura")
+  .addEventListener("change", function (e) {
+    const file = e.target.files[0];
+    if (!file || !file.type.startsWith("image/")) {
+      alert("Selecione uma imagem válida.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      imgCropper.src = event.target.result;
+      modalCropper.style.display = "flex";
+
+      if (cropper) cropper.destroy();
+
+      cropper = new Cropper(imgCropper, {
+        aspectRatio: NaN,
+        viewMode: 1,
+        autoCropArea: 1,
+      });
+    };
+
+    reader.readAsDataURL(file);
+  });
 
 btnCortar.addEventListener("click", function () {
   const canvas = cropper.getCroppedCanvas();
@@ -203,28 +206,28 @@ let currentPage = 1;
 let totalPages = 0;
 
 // Botões de navegação
-const btnAnterior = document.getElementById('btn-anterior');
-const btnProximo = document.getElementById('btn-proximo');
-const paginaInfo = document.getElementById('pagina-info');
+const btnAnterior = document.getElementById("btn-anterior");
+const btnProximo = document.getElementById("btn-proximo");
+const paginaInfo = document.getElementById("pagina-info");
 
 // Função para renderizar a página atual do PDF
 async function renderPage(pageNum) {
   if (!pdfDoc) return;
   const page = await pdfDoc.getPage(pageNum);
   const viewport = page.getViewport({ scale: 1.5 });
-  const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
   canvas.width = viewport.width;
   canvas.height = viewport.height;
 
   const renderContext = {
     canvasContext: context,
-    viewport: viewport
+    viewport: viewport,
   };
   await page.render(renderContext).promise;
 
   // Limpar e colocar só a página atual no canvasArea, junto com a assinatura
-  canvasArea.innerHTML = '';
+  canvasArea.innerHTML = "";
   canvasArea.appendChild(canvas);
   canvasArea.appendChild(assinaturaImg);
 
@@ -233,20 +236,20 @@ async function renderPage(pageNum) {
 }
 
 // Eventos dos botões de navegação
-btnAnterior.addEventListener('click', () => {
+btnAnterior.addEventListener("click", () => {
   if (currentPage <= 1) return;
   currentPage--;
   renderPage(currentPage);
 });
 
-btnProximo.addEventListener('click', () => {
+btnProximo.addEventListener("click", () => {
   if (currentPage >= totalPages) return;
   currentPage++;
   renderPage(currentPage);
 });
 
 // Atualize o listener de upload para PDF para carregar todas as páginas (adicione dentro do seu listener)
-uploadReceita.addEventListener('change', async function () {
+uploadReceita.addEventListener("change", async function () {
   const file = this.files[0];
   if (!file) return;
 
@@ -265,5 +268,38 @@ uploadReceita.addEventListener('change', async function () {
   }
 });
 
+// modal de carregamento
 
+async function gerarPDFCompleto() {
+  if (!pdfDoc) {
+    alert("Nenhum PDF carregado.");
+    return;
+  }
 
+  // 👉 Mostrar modal de carregamento
+  document.getElementById("loading-modal").style.display = "flex";
+
+  const pdf = new jspdf.jsPDF("p", "mm", "a4");
+  const assinaturaPos = assinaturaImg.getBoundingClientRect();
+  const canvasRect = canvasArea.getBoundingClientRect();
+
+  for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+    await renderPage(pageNum); // Mostra página
+    await new Promise((resolve) => setTimeout(resolve, 300)); // Espera DOM atualizar
+
+    const canvas = await html2canvas(canvasArea);
+    const imgData = canvas.toDataURL("image/png");
+
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    if (pageNum > 1) pdf.addPage();
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+  }
+
+  pdf.save("receita-assinada-completa.pdf");
+
+  // 👉 Esconder modal de carregamento
+  document.getElementById("loading-modal").style.display = "none";
+}
